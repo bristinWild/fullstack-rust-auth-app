@@ -24,13 +24,6 @@ struct UpdatePassword {
     password: Option<String>, 
 }
 
-#[derive(Debug, Serialize)]
-struct User {
-    userid: i32,
-    email: String,
-    password: String,
-}
-
 type Db = Pool<Postgres>;
 
 
@@ -65,7 +58,7 @@ async fn register_user(
     .await
     .unwrap();
 
-    let user = User {
+    let user = UserProfile {
         userid: rec.userid,
         email: rec.email,
         password: rec.password,
@@ -95,7 +88,7 @@ async fn update_user(
         .unwrap();
 
         if let Some(user) = rec {
-            let updated_user = User {
+            let updated_user = UserProfile {
                 userid: user.userid,
                 email: user.email,
                 password: user.password,
